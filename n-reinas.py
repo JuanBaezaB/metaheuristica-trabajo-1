@@ -2,6 +2,20 @@ import numpy as np
 import time
 import sys
 
+def fitness(a):
+    i = 0
+    j = 1
+    count = 0
+    while i<len(a)-1:
+        while j<len(a):
+            if abs(a[0][i]-a[0][j]) == abs(i-j):
+                count += 1
+                print("Colisiones: " + str(i) + " " + str(a[0][i]) + " " + str(j) + " " + str(a[0][j]))
+            j += 1
+        i += 1
+        j = i + 1
+    return count
+
 start = time.time()
 
 def pobl_inicial(tamaño_tabl, tamaño_pobl):
@@ -29,20 +43,10 @@ else:
     print('Los paramentros a ingresar son: semilla TamañoTablero TamañoPoblación ProbabilidadCruza ProbabilidadMutación NumeroIteración')
     sys.exit(0)
 
-
 np.random.seed(seed)
 
-
-print(pobl_inicial(tamaño_tabl, tamaño_pobl))
-
-
-
-
-
-
+print(fitness(pobl_inicial(tamaño_tabl, tamaño_pobl)))
 
 # tiempo ejecución
 end = time.time()
 print('Tiempo de ejecución:', end - start,'segundos')
-
-
