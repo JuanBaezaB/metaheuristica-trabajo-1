@@ -5,7 +5,7 @@ import sys
 start = time.time()
 
 def pobl_inicial(tamaño_tabl, tamaño_pobl):
-    poblacion = np.zeros([tamaño_tabl, tamaño_pobl], dtype=int)
+    poblacion = np.zeros([tamaño_pobl, tamaño_tabl], dtype=int)
     for k in range(tamaño_pobl):
         poblacion[k] = np.arange(0,tamaño_tabl)
         np.random.shuffle(poblacion[k])
@@ -28,7 +28,6 @@ else:
     print('Error en la entrada de los parametros')
     print('Los paramentros a ingresar son: semilla TamañoTablero TamañoPoblación ProbabilidadCruza ProbabilidadMutación NumeroIteración')
     sys.exit(0)
-
 
 np.random.seed(seed)
 
