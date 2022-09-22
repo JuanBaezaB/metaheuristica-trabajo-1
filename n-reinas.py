@@ -9,8 +9,8 @@ def fitness(a):
     while population < tamaño_pobl:
         i = 0
         j = 1
-        while i<len(a)-1:
-            while j<len(a):
+        while i<tamaño_pobl-1:
+            while j<tamaño_tabl:
                 if abs(a[population][i]-a[population][j]) == abs(i-j):
                     count += 1
                     # print("Colisiones: " + str(i) + " " + str(a[population][i]) + " " + str(j) + " " + str(a[population][j]))
