@@ -3,18 +3,24 @@ import time
 import sys
 
 def fitness(a):
-    i = 0
-    j = 1
+    population = 0
     count = 0
-    while i<len(a)-1:
-        while j<len(a):
-            if abs(a[0][i]-a[0][j]) == abs(i-j):
-                count += 1
-                print("Colisiones: " + str(i) + " " + str(a[0][i]) + " " + str(j) + " " + str(a[0][j]))
-            j += 1
-        i += 1
-        j = i + 1
-    return count
+    list = []
+    while population < tamaño_pobl:
+        i = 0
+        j = 1
+        while i<len(a)-1:
+            while j<len(a):
+                if abs(a[population][i]-a[population][j]) == abs(i-j):
+                    count += 1
+                    # print("Colisiones: " + str(i) + " " + str(a[population][i]) + " " + str(j) + " " + str(a[population][j]))
+                j += 1
+            i += 1
+            j = i + 1
+        population += 1
+        list.append(count)
+        count = 0
+    return list
 
 start = time.time()
 
