@@ -2,7 +2,7 @@ import numpy as np
 import time
 import sys
 
-def fitness(a):
+def fitness(tablero):
     population = 0
     count = 0
     list = []
@@ -11,9 +11,9 @@ def fitness(a):
         j = 1
         while i<tamaño_pobl-1:
             while j<tamaño_tabl:
-                if abs(a[population][i]-a[population][j]) == abs(i-j):
+                if abs(tablero[population][i]-tablero[population][j]) == abs(i-j):
                     count += 1
-                    # print("Colisiones: " + str(i) + " " + str(a[population][i]) + " " + str(j) + " " + str(a[population][j]))
+                    # print("Colisiones: " + str(i) + " " + str(tablero[population][i]) + " " + str(j) + " " + str(tablero[population][j]))
                 j += 1
             i += 1
             j = i + 1
