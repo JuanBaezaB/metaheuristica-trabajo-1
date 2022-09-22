@@ -2,6 +2,20 @@ import numpy as np
 import time
 import sys
 
+def ruleta(fit):
+    n = sum(fit)
+    prop = []
+    for i in fit:
+        prop.append(i/n)
+    rulet = []
+    rulet.append(prop[0])
+    for i in range(1, len(prop)):
+        rulet.append(rulet[i-1]+prop[i])
+    print(rulet)
+    return rulet
+
+
+
 def fitness(tablero):
     population = 0
     count = 0
@@ -29,6 +43,7 @@ def pobl_inicial(tamaño_tabl, tamaño_pobl):
     for k in range(tamaño_pobl):
         poblacion[k] = np.arange(0,tamaño_tabl)
         np.random.shuffle(poblacion[k])
+
     return poblacion
 
 if len(sys.argv) == 7:
@@ -51,7 +66,15 @@ else:
 
 np.random.seed(seed)
 
-print(fitness(pobl_inicial(tamaño_tabl, tamaño_pobl)))
+#print(fitness(pobl_inicial(tamaño_tabl, tamaño_pobl)))
+fit = fitness(pobl_inicial(tamaño_tabl, tamaño_pobl))
+
+
+while 0 not in fit:
+    rulet = ruleta(fit)
+    select_rulet = np.random.random(1)[0]
+    
+
 
 # tiempo ejecución
 end = time.time()
