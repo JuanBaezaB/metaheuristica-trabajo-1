@@ -2,7 +2,7 @@ import numpy as np
 import time
 import sys
 
-start = time.process_time()
+start = time.time()
 
 def pobl_inicial(tamaño_tabl, tamaño_pobl):
     poblacion = np.zeros([tamaño_tabl, tamaño_pobl], dtype=int)
@@ -42,7 +42,7 @@ print(pobl_inicial(tamaño_tabl, tamaño_pobl))
 
 
 # tiempo ejecución
-end = time.process_time()
+end = time.time()
 print('Tiempo de ejecución:', end - start,'segundos')
 
 
