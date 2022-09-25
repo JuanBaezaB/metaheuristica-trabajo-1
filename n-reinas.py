@@ -36,6 +36,18 @@ def fitness(tablero):
         count = 0
     return list
 
+def crossingOver():
+    children = []
+    crossChildren1 = initialPop[cruza[0]]
+    crossChildren2 = initialPop[cruza[1]]
+    children = np.array([crossChildren1, crossChildren2])
+    randomChromosome = int(np.random.random(1)[0]*(tamaño_tabl-1))
+    for i in range(randomChromosome):
+        aux = children[[0][0]][i]
+        children[[0][0]][i] = children[[1][0]][i]
+        children[[1][0]][i] = aux
+    return children
+
 start = time.time()
 
 def pobl_inicial(tamaño_tabl, tamaño_pobl):
@@ -67,15 +79,25 @@ else:
 np.random.seed(seed)
 
 #print(fitness(pobl_inicial(tamaño_tabl, tamaño_pobl)))
-fit = fitness(pobl_inicial(tamaño_tabl, tamaño_pobl))
+initialPop = pobl_inicial(tamaño_tabl, tamaño_pobl)
+fit = fitness(initialPop)
 
 
-while 0 not in fit:
-    rulet = ruleta(fit)
+# while 0 not in fit:
+rulet = ruleta(fit)
+sons = []
+cruza = []
+while len(cruza) < 2:
     select_rulet = np.random.random(1)[0]
-    
-
-
+    result = np.where(rulet < select_rulet) # result[0][-1] + 1 da la ultima coincidencia para cruzar cromosomas, hay casos en que sume 0.99 al final?
+    if result[0][-1] + 1 not in cruza:
+        cruza.append(result[0][-1] + 1)
+newChildren = crossingOver()
+newChildren_x, newChildren_y = newChildren.shape
+sons = np.append(sons, newChildren)
+sons = np.resize(sons, (newChildren_x, tamaño_tabl))
+print(initialPop)
+print(sons)
 # tiempo ejecución
 end = time.time()
 print('Tiempo de ejecución:', end - start,'segundos')
