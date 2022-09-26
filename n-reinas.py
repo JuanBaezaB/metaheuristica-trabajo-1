@@ -24,7 +24,6 @@ def fitness(tablero):
             while j<tamaño_tabl:
                 if abs(tablero[population][i]-tablero[population][j]) == abs(i-j):
                     count += 1
-                    # print("Colisiones: " + str(i) + " " + str(tablero[population][i]) + " " + str(j) + " " + str(tablero[population][j]))
                 j += 1
             i += 1
             j = i + 1
@@ -84,7 +83,7 @@ fit = fitness(initialPop)
 rulet = [0]
 rulet = np.append(rulet, ruleta(fit))
 sons = []
-for i in range(int(tamaño_pobl/2)):
+while int(len(sons)/tamaño_pobl) < tamaño_pobl:
     cruza = []
     while len(cruza) < 2:
         select_rulet = np.random.random(1)[0]
@@ -92,7 +91,14 @@ for i in range(int(tamaño_pobl/2)):
         if result[0][-1] not in cruza:
             cruza.append(result[0][-1])
     newChildren = crossingOver()
-    sons = np.append(sons, newChildren)
+    if np.random.random(1)[0] < prob_cruza:
+        if int(len(sons)/tamaño_pobl) + 2 > tamaño_pobl:
+            if np.random.random(1)[0] < 0.5:
+                sons = np.append(sons, newChildren[0])
+            else:
+                sons = np.append(sons, newChildren[1])
+        else:
+            sons = np.append(sons, newChildren)
 sons = np.resize(sons, (tamaño_pobl, tamaño_tabl))
 sons = sons.astype(int)
 print(sons)
