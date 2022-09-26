@@ -2,6 +2,9 @@ import numpy as np
 import time
 import sys
 
+start = time.time()
+
+
 def ruleta(fit):
     n = sum(fit)
     prop = []
@@ -51,39 +54,39 @@ def rectification(children):
     index = np.arange(0,columns)
     for j in range(rows):
             while True:
-                rep = [x for i, x in enumerate(children[j]) if x in children[j][:i]]
-                msg = [i for i in index if i not in children[j]]
-                #print('hijo :', children[j], rep, msg)
-                if len(rep):
+                rep = [x for i, x in enumerate(children[j]) if x in children[j][:i]] # Elementos repetidos
+                msg = [i for i in index if i not in children[j]] # Elementos faltantes
+                if len(rep): # revisamos si existen elementos repetidos
                     np.random.shuffle(index)
                     for k in index:
-                        if children[j][k] in rep:
-                            #print(children[j],' rep ', rep,' msg: ', msg, k, children[j][k])
+                        if children[j][k] in rep: # revisamos si el elemento esta dentro de los repetidos
                             rep.remove(children[j][k])
                             children[j][k] = np.random.choice(msg,1)
                             msg.remove(children[j][k])
                 else:
                     break
     return children
-                
-
-        
-        
+            
+def mutation(sons):
+    rows, columns= sons.shape
+    for son in sons:
+        print(son)
+        if np.random.rand() < prob_mut:
+            while True:
+                a = np.random.randint(0, columns)
+                b = np.random.randint(0, columns)
+                if a != b:
+                    break
+            son[[a,b]] = son [[b,a]]
+            print('Muto:', son)
     
 
-        
-    #unique, indices = np.unique(children[0], return_index=True)
-    
-
-
-start = time.time()
 
 def pobl_inicial(tamaño_tabl, tamaño_pobl):
     poblacion = np.zeros([tamaño_pobl, tamaño_tabl], dtype=int)
     for k in range(tamaño_pobl):
         poblacion[k] = np.arange(0,tamaño_tabl)
         np.random.shuffle(poblacion[k])
-
     return poblacion
 
 if len(sys.argv) == 7:
@@ -93,12 +96,12 @@ if len(sys.argv) == 7:
     prob_cruza = float(sys.argv[4])
     prob_mut = float(sys.argv[5])
     num_ite = int(sys.argv[6])
-    print("seed: ", seed)
-    print("tamaño_tabl: ", tamaño_tabl)
-    print("tamaño_pobl : ", tamaño_pobl)
-    print("prob_cruza : ", prob_cruza)
-    print("prob_mut : ", prob_mut)
-    print("num_ite : ", num_ite)
+    print("semilla: ", seed)
+    print("tamaño_tablero: ", tamaño_tabl)
+    print("tamaño_población: ", tamaño_pobl)
+    print("probabilidad_cruza: ", prob_cruza)
+    print("probabilidad_mutación: ", prob_mut)
+    print("número_iteraciones: ", num_ite)
 else:
     print('Error en la entrada de los parametros')
     print('Los paramentros a ingresar son: semilla TamañoTablero TamañoPoblación ProbabilidadCruza ProbabilidadMutación NumeroIteración')
@@ -134,6 +137,7 @@ while int(len(sons)/tamaño_pobl) < tamaño_pobl:
 sons = np.resize(sons, (tamaño_pobl, tamaño_tabl))
 sons = sons.astype(int)
 print(sons)
+sons = mutation(sons)
 # tiempo ejecución
 end = time.time()
 print('Tiempo de ejecución:', end - start,'segundos')
