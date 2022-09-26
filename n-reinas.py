@@ -68,9 +68,9 @@ def rectification(children):
     return children
             
 def mutation(sons):
+    saveSons = []
     rows, columns= sons.shape
     for son in sons:
-        print(son)
         if np.random.rand() < prob_mut:
             while True:
                 a = np.random.randint(0, columns)
@@ -78,7 +78,8 @@ def mutation(sons):
                 if a != b:
                     break
             son[[a,b]] = son [[b,a]]
-            print('Muto:', son)
+        saveSons = np.append(saveSons, son)
+    return saveSons
     
 
 
@@ -109,35 +110,41 @@ else:
 
 np.random.seed(seed)
 
-#print(fitness(pobl_inicial(tamaño_tabl, tamaño_pobl)))
 initialPop = pobl_inicial(tamaño_tabl, tamaño_pobl)
-fit = fitness(initialPop)
-
-
-# while 0 not in fit:
-rulet = [0]
-rulet = np.append(rulet, ruleta(fit))
-sons = []
-while int(len(sons)/tamaño_pobl) < tamaño_pobl:
-    cruza = []
-    while len(cruza) < 2:
-        select_rulet = np.random.random(1)[0]
-        result = np.where(rulet < select_rulet) # result[0][-1] + 1 da la ultima coincidencia para cruzar cromosomas, hay casos en que sume 0.99 al final?
-        if result[0][-1] not in cruza:
-            cruza.append(result[0][-1])
-    newChildren = crossingOver()
-    if np.random.random(1)[0] < prob_cruza:
-        if int(len(sons)/tamaño_pobl) + 2 > tamaño_pobl:
-            if np.random.random(1)[0] < 0.5:
-                sons = np.append(sons, newChildren[0])
+while 1:
+    fit = fitness(initialPop)
+    if 0 in fit or num_ite == 0:
+        break
+    num_ite -= 1
+    rulet = [0]
+    rulet = np.append(rulet, ruleta(fit))
+    sons = []
+    while int(len(sons)/tamaño_pobl) < tamaño_pobl:
+        cruza = []
+        while len(cruza) < 2:
+            select_rulet = np.random.random(1)[0]
+            result = np.where(rulet < select_rulet) # result[0][-1] + 1 da la ultima coincidencia para cruzar cromosomas, hay casos en que sume 0.99 al final?
+            if result[0][-1] not in cruza:
+                cruza.append(result[0][-1])
+        newChildren = crossingOver()
+        if np.random.random(1)[0] < prob_cruza:
+            if int(len(sons)/tamaño_pobl) + 2 > tamaño_pobl:
+                if np.random.random(1)[0] < 0.5:
+                    sons = np.append(sons, newChildren[0])
+                else:
+                    sons = np.append(sons, newChildren[1])
             else:
-                sons = np.append(sons, newChildren[1])
-        else:
-            sons = np.append(sons, newChildren)
-sons = np.resize(sons, (tamaño_pobl, tamaño_tabl))
-sons = sons.astype(int)
-print(sons)
-sons = mutation(sons)
+                sons = np.append(sons, newChildren)
+    sons = np.resize(sons, (tamaño_pobl, tamaño_tabl))
+    sons = sons.astype(int)
+    initialPop = mutation(sons)
+    initialPop = np.resize(initialPop, (tamaño_pobl, tamaño_tabl))
+    initialPop = sons.astype(int)
+pos = np.where(np.array(fit) == 0)
+if len(pos[0]) > 0:
+    print("Solucion:", initialPop[pos[0]], sep=' ')
+else:
+    print("No se encontro solucion")
 # tiempo ejecución
 end = time.time()
 print('Tiempo de ejecución:', end - start,'segundos')
