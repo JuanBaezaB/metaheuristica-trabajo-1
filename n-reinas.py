@@ -83,27 +83,18 @@ fit = fitness(initialPop)
 # while 0 not in fit:
 rulet = [0]
 rulet = np.append(rulet, ruleta(fit))
+sons = []
 for i in range(int(tamaño_pobl/2)):
-    sons = []
     cruza = []
-    # print(sons)
-    # print(cruza)
     while len(cruza) < 2:
         select_rulet = np.random.random(1)[0]
-        # print(select_rulet)
         result = np.where(rulet < select_rulet) # result[0][-1] + 1 da la ultima coincidencia para cruzar cromosomas, hay casos en que sume 0.99 al final?
-        # print("Result: ", end=' ')
-        # print(result)
-        # print(result[0][-1] + 1)
         if result[0][-1] not in cruza:
             cruza.append(result[0][-1])
-            # print("Entro")
     newChildren = crossingOver()
-    newChildren_x, newChildren_y = newChildren.shape
     sons = np.append(sons, newChildren)
-    sons = np.resize(sons, (newChildren_x, tamaño_tabl))
-    # print("Continua")
-print(initialPop)
+sons = np.resize(sons, (tamaño_pobl, tamaño_tabl))
+sons = sons.astype(int)
 print(sons)
 # tiempo ejecución
 end = time.time()
