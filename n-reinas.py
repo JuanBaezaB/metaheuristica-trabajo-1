@@ -11,10 +11,7 @@ def ruleta(fit):
     rulet.append(prop[0])
     for i in range(1, len(prop)):
         rulet.append(rulet[i-1]+prop[i])
-    print(rulet)
     return rulet
-
-
 
 def fitness(tablero):
     population = 0
@@ -84,18 +81,28 @@ fit = fitness(initialPop)
 
 
 # while 0 not in fit:
-rulet = ruleta(fit)
-sons = []
-cruza = []
-while len(cruza) < 2:
-    select_rulet = np.random.random(1)[0]
-    result = np.where(rulet < select_rulet) # result[0][-1] + 1 da la ultima coincidencia para cruzar cromosomas, hay casos en que sume 0.99 al final?
-    if result[0][-1] + 1 not in cruza:
-        cruza.append(result[0][-1] + 1)
-newChildren = crossingOver()
-newChildren_x, newChildren_y = newChildren.shape
-sons = np.append(sons, newChildren)
-sons = np.resize(sons, (newChildren_x, tamaño_tabl))
+rulet = [0]
+rulet = np.append(rulet, ruleta(fit))
+for i in range(int(tamaño_pobl/2)):
+    sons = []
+    cruza = []
+    # print(sons)
+    # print(cruza)
+    while len(cruza) < 2:
+        select_rulet = np.random.random(1)[0]
+        # print(select_rulet)
+        result = np.where(rulet < select_rulet) # result[0][-1] + 1 da la ultima coincidencia para cruzar cromosomas, hay casos en que sume 0.99 al final?
+        # print("Result: ", end=' ')
+        # print(result)
+        # print(result[0][-1] + 1)
+        if result[0][-1] not in cruza:
+            cruza.append(result[0][-1])
+            # print("Entro")
+    newChildren = crossingOver()
+    newChildren_x, newChildren_y = newChildren.shape
+    sons = np.append(sons, newChildren)
+    sons = np.resize(sons, (newChildren_x, tamaño_tabl))
+    # print("Continua")
 print(initialPop)
 print(sons)
 # tiempo ejecución
