@@ -1,3 +1,4 @@
+from ast import While
 import numpy as np
 import time
 import sys
@@ -42,7 +43,33 @@ def crossingOver():
         aux = children[[0][0]][i]
         children[[0][0]][i] = children[[1][0]][i]
         children[[1][0]][i] = aux
+    rectification(children)
     return children
+
+
+def rectification(children):
+    rows, columns= children.shape
+    for j in range(rows):
+            while TRUE:
+                dup = np. array([x for i, x in enumerate(children[j]) if x in children[j][:i]])
+                if dup:
+                    index = np.arange(0,columns)
+                    np.random.shuffle(index)
+                    for k in index:
+                        if np.where(dup == children[j][k]):
+                            children[j][k] = np.random.choice(dup)
+                        
+                else:
+                    break
+
+        
+        
+    
+
+        
+    #unique, indices = np.unique(children[0], return_index=True)
+    
+
 
 start = time.time()
 
