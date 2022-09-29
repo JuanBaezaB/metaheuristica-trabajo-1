@@ -127,10 +127,11 @@ while 1:
             cruza = []
             while len(cruza) < 2:
                 select_rulet = np.random.random(1)[0]
-                result = np.where(rulet < select_rulet) # result[0][-1] + 1 da la ultima coincidencia para cruzar cromosomas, hay casos en que sume 0.99 al final?
+                result = np.where(rulet < select_rulet)
                 if result[0][-1] not in cruza:
                     cruza.append(result[0][-1])
             newChildren = crossingOver()
+            newChildren = mutation(newChildren)
             if int(len(sons)/tamaño_pobl) + 2 > tamaño_pobl:
                 if np.random.random(1)[0] < 0.5:
                     sons = np.append(sons, newChildren[0])
@@ -140,14 +141,15 @@ while 1:
                 sons = np.append(sons, newChildren)
     sons = np.resize(sons, (tamaño_pobl, tamaño_tabl))
     sons = sons.astype(int)
-    initialPop = mutation(sons)
     initialPop = np.resize(initialPop, (tamaño_pobl, tamaño_tabl))
     initialPop = sons.astype(int)
 pos = np.where(np.array(fit) == 0)
 if len(pos[0]) > 0:
     print("Solucion:", initialPop[pos[0]], sep=' ')
 else:
+
     print("No se encontro solucion")
+    print("La mejor solución encontrada es:", initialPop[int(1/np.amax(fit))],"con un total de", int(1/np.amax(fit)), "choques")
 # tiempo ejecución
 end = time.time()
 print('Tiempo de ejecución:', end - start,'segundos')

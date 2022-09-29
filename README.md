@@ -1,6 +1,5 @@
 # Algoritmo genético para el problema de las n-reinas
----
-El programa presenta una solucion estocástica llamada algoritmo genético para la resolución del problema de las n reinas.
+El programa presenta una solución estocástica llamada algoritmo genético para la resolución del problema de las n reinas.
 Para el correcto funcionamiento de este se deben considerar los siguientes puntos:
 ## Instalacion
 Para instalar la aplicacion se deben seguir los siguientes pasos:
@@ -10,7 +9,7 @@ Para instalar la aplicacion se deben seguir los siguientes pasos:
 ```
 pip install numpy
 ```
-## Ejecucion
+## Ejecución
 - Para ejecutar se debe ejecutar el comando 
 ```
 python ./n-reinas.py seed tamaño_tabl tamaño_pobl prob_cruza prob_mut num_ite
