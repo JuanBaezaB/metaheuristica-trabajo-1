@@ -28,5 +28,5 @@ python ./n-reinas.py 10 10 100 0.95 0.1 100
 
 Este programa fue desarrollado en [Github](https://github.com/JuanBaezaB/metaheuristica-trabajo-1)
 ## Autores
-- Juan Baeza Baeza - jbaeza@ing.ucsc.cl - [JuanBaezaB](https://github.com/JuanBaezaB)
-- Fernando Cabezas Herrera - fcabezas@ing.ucsc.cl - [FernandoProg](https://github.com/FernandoProg)
+- Juan Baeza Baeza / jbaeza@ing.ucsc.cl / [JuanBaezaB](https://github.com/JuanBaezaB)
+- Fernando Cabezas Herrera / fcabezas@ing.ucsc.cl / [FernandoProg](https://github.com/FernandoProg)
