@@ -31,7 +31,10 @@ def fitness(tablero):
             i += 1
             j = i + 1
         population += 1
-        list.append(count)
+        if count != 0:
+            list.append(1/count)
+        else:
+            list.append(0)
         count = 0
     return list
 
@@ -120,14 +123,14 @@ while 1:
     rulet = np.append(rulet, ruleta(fit))
     sons = []
     while int(len(sons)/tamaño_pobl) < tamaño_pobl:
-        cruza = []
-        while len(cruza) < 2:
-            select_rulet = np.random.random(1)[0]
-            result = np.where(rulet < select_rulet) # result[0][-1] + 1 da la ultima coincidencia para cruzar cromosomas, hay casos en que sume 0.99 al final?
-            if result[0][-1] not in cruza:
-                cruza.append(result[0][-1])
-        newChildren = crossingOver()
         if np.random.random(1)[0] < prob_cruza:
+            cruza = []
+            while len(cruza) < 2:
+                select_rulet = np.random.random(1)[0]
+                result = np.where(rulet < select_rulet) # result[0][-1] + 1 da la ultima coincidencia para cruzar cromosomas, hay casos en que sume 0.99 al final?
+                if result[0][-1] not in cruza:
+                    cruza.append(result[0][-1])
+            newChildren = crossingOver()
             if int(len(sons)/tamaño_pobl) + 2 > tamaño_pobl:
                 if np.random.random(1)[0] < 0.5:
                     sons = np.append(sons, newChildren[0])
